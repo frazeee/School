@@ -2,6 +2,7 @@ document.getElementById('bikeForm').addEventListener('submit', function (event) 
   event.preventDefault();
 
   var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  var summaryCard = document.getElementById('summary-card');
 
   var isChecked = false;
 
@@ -10,6 +11,7 @@ document.getElementById('bikeForm').addEventListener('submit', function (event) 
   if (!isChecked) {
     event.preventDefault();
     alert('Please select atleast one bike.')
+    summaryCard.classList.add('d-none');
     return;
   }
 
@@ -30,7 +32,6 @@ document.getElementById('bikeForm').addEventListener('submit', function (event) 
     }
   }
 
-  var summaryCard = document.getElementById('summary-card');
   summaryCard.classList.remove('d-none');
 
   document.getElementById('total-price').innerText = "Total Price: $" + totalPrice;
