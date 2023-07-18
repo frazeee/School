@@ -1,58 +1,78 @@
 let itemsArray = [];
+let removedItemsArray = [];
 
 document.getElementById('groceryForm').addEventListener('submit', function(e){
     e.preventDefault();
+
     let itemName = document.getElementById('itemName').value;
     let quantity = document.getElementById('Quantity').value;
 
     itemsArray.push({name: itemName, quantity: quantity});
 
     let newItem = createListItem(itemName, quantity);
-    document.querySelector('.card-body .list-group').appendChild(newItem);
+    document.querySelector('#allItemsList').appendChild(newItem);
 });
 
-function createListItem(itemName, quantity) {
+document.getElementById('clearRemovedItems').addEventListener('click', function(e){
+    removedItemsArray = [];
+    document.querySelector('#removedItemsList').innerHTML = "";
+});
+
+function createListItem(itemName, quantity, isRemoved=false) {
     let newItem = document.createElement('li');
-    newItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center','border-0', 'mb-2', 'rounded');
+    newItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'border-0', 'mb-2', 'rounded');
     newItem.style.backgroundColor = "#f4f6f7";
 
     let itemDetails = document.createElement('div');
-    itemDetails.classList.add('d-flex','align-items-center');
+    itemDetails.classList.add('d-flex', 'align-items-center');
 
-    let checkbox = document.createElement('input');
-    checkbox.classList.add('form-check-input', 'me-2');
-    checkbox.type = 'checkbox';
-    checkbox.value='';
-    checkbox.setAttribute('aria-label', '...');
+    if(!isRemoved) {
+        let checkbox = document.createElement('input');
+        checkbox.classList.add('form-check-input', 'me-2');
+        checkbox.type = 'checkbox';
+        checkbox.value = '';
+        checkbox.setAttribute('aria-label', '...');
 
-    itemDetails.appendChild(checkbox);
+        checkbox.addEventListener('change', function(e) {
+            if(e.target.checked) {
+                let index = itemsArray.findIndex(i => i.name === itemName && i.quantity === quantity);
+                if (index !== -1) {
+                    let removedItem = itemsArray.splice(index, 1)[0];
+                    removedItemsArray.push(removedItem);
+
+                    let removedListItem = createListItem(itemName, quantity, true);
+                    document.querySelector('#removedItemsList').appendChild(removedListItem);
+                    e.target.parentElement.parentElement.remove();
+                }
+            }
+        });
+
+        itemDetails.appendChild(checkbox);
+    }
+
     itemDetails.innerHTML += `${itemName} (${quantity})`;
 
-    let removeButton = document.createElement('button');
-    removeButton.classList.add('btn', 'btn-danger','btn-sm');
-    removeButton.textContent ='Remove';
+    if(!isRemoved) {
+        let removeButton = document.createElement('button');
+        removeButton.classList.add('btn', 'btn-danger', 'btn-sm');
+        removeButton.textContent = 'Remove';
 
-    removeButton.addEventListener('click', function(e) {
-        let index = itemsArray.findIndex(i => i.name === itemName && i.quantity === quantity);
-        if (index !== -1){
-            itemsArray.splice(index,1);
-        }
+        removeButton.addEventListener('click', function(e) {
+            let index = itemsArray.findIndex(i => i.name === itemName && i.quantity === quantity);
+            if (index !== -1) {
+                let removedItem = itemsArray.splice(index, 1)[0];
+                removedItemsArray.push(removedItem);
 
-        let removedItem = createListItem(itemName,quantity);
-        document.querySelector('#removedItemsList').appendChild(removedItem);
-        e.target.parentElement.remove();
-    });
+                let removedListItem = createListItem(itemName, quantity, true);
+                document.querySelector('#removedItemsList').appendChild(removedListItem);
+                e.target.parentElement.remove();
+            }
+        });
+
+        newItem.appendChild(removeButton);
+    }
 
     newItem.appendChild(itemDetails);
-    newItem.appendChild(removeButton);
-                    
+
     return newItem;
 }
-
-// Add a clear button for removed items
-document.getElementById('clearButton').addEventListener('click', function() {
-    let removedItemsList = document.getElementById('removedItemsList');
-    while (removedItemsList.firstChild) {
-        removedItemsList.removeChild(removedItemsList.firstChild);
-    }
-});
