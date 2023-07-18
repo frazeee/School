@@ -9,7 +9,7 @@ document.getElementById('groceryForm').addEventListener('submit', function(e) {
 
     itemsArray.push({ name: itemName, quantity: quantity });
 
-    let newItem = createListItem(itemName, quantity);
+    let newItem = createListItem(itemName, quantity, false);
     document.querySelector('#allItemsList').appendChild(newItem);
 
     // Clear input values
