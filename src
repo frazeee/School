@@ -1,0 +1,60 @@
+let itemsArray = [];
+
+document.getElementById('groceryForm').addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    let itemName = document.getElementById('itemName').value;
+    let quantity = document.getElementById('Quantity').value;
+
+    itemsArray.push({name: itemName, quantity: quantity});
+
+    let newItem = document.createListItem(itemName, quantity);
+
+    document.querySelector('#ex1-tabs-1, list-group').appendChild(newItem);
+    
+  });
+
+  function createListItem(itemName, quantity){
+
+    let newItem = document.createElement('li');
+    newItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center','border-0', 'mb-2', 'rounded');
+    newItem.style.backgroundColor = "#f4f6f7";
+
+    let itemDetails = document.createElement('div');
+    itemDetails.className.add('d-flex','align-items-center');
+
+    let checkbox = document.createElement('input');
+    checkbox.classList.add('form-check-input', 'me-2');
+    checkbox.type = 'checkbox';
+    checkbox.value='';
+    checkbox.setAttribute('aria-label', '...');
+
+    itemDetails.appendChild(checkbox);
+    itemDetails.innerHTML += '${itemname} ($(quantity)}';
+
+    let removeButton = document.createElement('button');
+    removeButton.classList.add('btn', 'btn-danger','btn-sm');
+    removeButton.textContent ='Remove';
+
+
+    removeButton.addEventListener('click', function(e) {
+
+        let index = items.findIndex(i => i.name === itemName && i.quantity === quantity);
+        if (index !== -1){
+            items.splice(index,1);
+        }
+
+        let removedItem = createListItem(itemName,quantity);
+        document.querySelector('#removedItemsList').appendChild(removedItem);
+        e.target.parentElement.remove();
+  });
+
+    newItem.appendChild(itemDetails);
+    newItem.appendChild(removeButton);
+                    
+    return newItem;
+
+
+
+}
