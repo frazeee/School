@@ -50,7 +50,8 @@ function createListItem(itemName, quantity, isRemoved=false) {
         itemDetails.appendChild(checkbox);
     }
 
-    itemDetails.innerHTML += `${itemName} (${quantity})`;
+    let itemText = document.createTextNode(`${itemName} (${quantity})`);
+    itemDetails.appendChild(itemText);
 
     if(!isRemoved) {
         let removeButton = document.createElement('button');
