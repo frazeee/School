@@ -1,21 +1,17 @@
 let itemsArray = [];
 
 document.getElementById('groceryForm').addEventListener('submit', function(e){
-
     e.preventDefault();
-
     let itemName = document.getElementById('itemName').value;
     let quantity = document.getElementById('Quantity').value;
 
     itemsArray.push({name: itemName, quantity: quantity});
 
     let newItem = createListItem(itemName, quantity);
-
-    document.querySelector('#ex1-tabs-1 .list-group').appendChild(newItem);
+    document.querySelector('.card-body .list-group').appendChild(newItem);
 });
 
-function createListItem(itemName, quantity){
-
+function createListItem(itemName, quantity) {
     let newItem = document.createElement('li');
     newItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center','border-0', 'mb-2', 'rounded');
     newItem.style.backgroundColor = "#f4f6f7";
@@ -42,15 +38,21 @@ function createListItem(itemName, quantity){
             itemsArray.splice(index,1);
         }
 
-        // Append the whole item to the removed list.
-        document.querySelector('#ex1-tabs-2 .list-group').appendChild(newItem);
-
-        // Remove the whole item from the original list.
-        newItem.parentNode.removeChild(newItem);
+        let removedItem = createListItem(itemName,quantity);
+        document.querySelector('#removedItemsList').appendChild(removedItem);
+        e.target.parentElement.remove();
     });
 
     newItem.appendChild(itemDetails);
     newItem.appendChild(removeButton);
-
+                    
     return newItem;
 }
+
+// Add a clear button for removed items
+document.getElementById('clearButton').addEventListener('click', function() {
+    let removedItemsList = document.getElementById('removedItemsList');
+    while (removedItemsList.firstChild) {
+        removedItemsList.removeChild(removedItemsList.firstChild);
+    }
+});
