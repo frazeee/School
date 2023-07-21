@@ -1,0 +1,82 @@
+let itemsArray = [];
+let removedItemsArray = [];
+
+function createListItem(itemName, quantity, isRemoved = false) {
+  let newItem = document.createElement('li');
+  newItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'border-0', 'mb-2', 'rounded');
+  newItem.style.backgroundColor = '#f4f6f7';
+
+  let itemDetails = document.createElement('div');
+  itemDetails.classList.add('d-flex', 'align-items-center');
+
+  if (!isRemoved) {
+    let checkbox = document.createElement('input');
+    checkbox.classList.add('form-check-input', 'me-2');
+    checkbox.type = 'checkbox';
+    checkbox.value = '';
+    checkbox.setAttribute('aria-label', '...');
+
+    checkbox.addEventListener('change', function (e) {
+      if (e.target.checked) {
+        let index = itemsArray.findIndex(i => i.name === itemName && i.quantity === quantity);
+        if (index !== -1) {
+          let removedItem = itemsArray.splice(index, 1)[0];
+          removedItemsArray.push(removedItem);
+
+          let removedListItem = createListItem(removedItem.name, removedItem.quantity, true);
+          document.querySelector('#removedItemsList').appendChild(removedListItem);
+          e.target.closest('.list-group-item').remove();
+        }
+      }
+    });
+
+    itemDetails.appendChild(checkbox);
+  }
+
+  let itemText = document.createElement('span');
+  itemText.textContent = `${itemName} (${quantity})`;
+  itemDetails.appendChild(itemText);
+
+  let removeButton = document.createElement('button');
+  removeButton.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2');
+  removeButton.textContent = 'Remove';
+
+  removeButton.addEventListener('click', function (e) {
+    let index = itemsArray.findIndex(i => i.name === itemName && i.quantity === quantity);
+    if (index !== -1) {
+      let removedItem = itemsArray.splice(index, 1)[0];
+      removedItemsArray.push(removedItem);
+
+      let removedListItem = createListItem(removedItem.name, removedItem.quantity, true);
+      document.querySelector('#removedItemsList').appendChild(removedListItem);
+      e.target.closest('.list-group-item').remove();
+    }
+  });
+
+  itemDetails.appendChild(removeButton);
+
+  newItem.appendChild(itemDetails);
+
+  return newItem;
+}
+
+document.getElementById('groceryForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  let itemName = document.getElementById('itemName').value;
+  let quantity = document.getElementById('Quantity').value;
+
+  itemsArray.push({ name: itemName, quantity: quantity });
+
+  let newItem = createListItem(itemName, quantity, false);
+  document.querySelector('#allItemsList').appendChild(newItem);
+
+  // Clear input values
+  document.getElementById('itemName').value = '';
+  document.getElementById('Quantity').value = '';
+});
+
+document.getElementById('clearButton').addEventListener('click', function (e) {
+  removedItemsArray = [];
+  document.querySelector('#removedItemsList').innerHTML = '';
+});
