@@ -103,43 +103,6 @@ a {
 
 
 
-.card-image img {
-  max-height: 100%;
-  max-width: 100%;
-  border-radius: 8px 8px 0px 0;
-}
-
-.card-heading {
-  font-size: 18px;
-  font-weight: bold;
-  background: #fff;
-  padding: 10px 15px;
-}
-
-.card-text {
-  padding: 10px 15px;
-  background: #fff;
-  font-size: 14px;
-  text-align: justify;
-  color: #636262;
-}
-
-.card-button {
-  display: flex;
-  justify-content: center;
-  padding: 10px 0;
-  width: 100%;
-  background-color: #155843;
-  color: #fff;
-  border-radius: 0 0 8px 8px;
-}
-
-.card-button:hover {
-  text-decoration: none;
-  background-color: #217359;
-  color: #fff;
-}
-
 @-webkit-keyframes pulse {
   0% {
     -moz-transform: scale(0.9);
