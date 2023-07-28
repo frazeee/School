@@ -1,0 +1,78 @@
+@font-face {
+    font-family: "Coolvetica";
+    src: url("fonts/coolvetica condensed rg.otf") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Nexabold";
+    src: url("fonts/Nexa-Heavy.ttf");
+  }
+  
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+  
+  body,
+  html {
+    height: 100%;
+  }
+  
+  .topbar {
+    background-color: #155843;
+    width: 100%;
+    
+  }
+  
+  .topbar h1{
+    font-family: "Coolvetica", sans-serif;
+    color: white;
+    font-size: 32px;
+    letter-spacing: 2px;
+  }
+  
+  .topbar2 a {
+    font-family: "Nexabold", sans-serif;
+    text-decoration: none;
+    color: #155843;
+    font-size: 24px;
+  }
+  .topbar2{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+  }
+  
+  .navvy a{
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    color: white;
+  }
+  
+  .tite{
+    padding:150px;
+  }
+
+  .title1 h1{
+    font-family: 'Nexabold', sans-serif;
+  }
+  .title1 h3{
+    font-family: 'Nexabold', sans-serif;
+  }
+  .title1 h4{
+    font-family: 'Nexabold', sans-serif;
+  }
+  .title1 p{
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+  }
+
+  .checkout1{
+    font-family: 'Raleway', sans-serif!important;
+    max-height: 40px;
+  }
+
+  .cartimage{
+    max-height: 100px;
+  }
+
+  .quantity1{
+    width: 100px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+  }
